@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+      - channel
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - '8000:8000'
+
+  channel:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+
+  postgres:
+    image: postgres:latest
+    env_file:
+      - .env
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - '8025:8025'

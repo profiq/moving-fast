@@ -1,0 +1,25 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '--tag=eu.gcr.io/${PROJECT_ID}/django:${BRANCH_NAME}'
+      - '--tag=eu.gcr.io/${PROJECT_ID}/django:${REVISION_ID}'
+      - '--tag=eu.gcr.io/${PROJECT_ID}/django:latest'
+      - '.'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'eu.gcr.io/${PROJECT_ID}/django'
+
+  - name: 'gcr.io/cloud-builders/kubectl'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=europe-west3-a'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=move-fast'
+    args:
+      - '--namespace=demo'
+      - 'set'
+      - 'image'
+      - 'deployment'
+      - 'production'
+      - 'django=eu.gcr.io/${PROJECT_ID}/django:${REVISION_ID}'
