@@ -1,8 +1,11 @@
 from datetime import datetime, timedelta
-from jwt import JWT
+import jwt
+import logging
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+
+logger = logging.getLogger(__name__)
 
 
 class User(AbstractUser):
@@ -14,7 +17,5 @@ class User(AbstractUser):
     def _generate_jwt_token(self):
         dt = datetime.now() + timedelta(days=60)
         data = {'id': self.pk, 'exp': int(dt.strftime('%s'))}
-        jwt = JWT()
-        token = jwt.encode(data, settings.SECRET_KEY, 'RS256')
-
+        token: bytes = jwt.encode(data, settings.SECRET_KEY, algorithm='HS256')
         return token.decode('utf-8')

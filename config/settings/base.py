@@ -1,6 +1,8 @@
 import sys
+import logging.config
 
 import environ
+from django.utils.log import DEFAULT_LOGGING
 
 ROOT_DIR = environ.Path(__file__) - 3
 APPS_DIR = ROOT_DIR.path('apps')
@@ -31,12 +33,17 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'apps.authentication.middlewares.JwtAuthMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
 AUTH_USER_MODEL = 'authentication.User'
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'apps.authentication.backends.JwtAuthBackend',
+]
 ASGI_APPLICATION = 'config.routing.application'
 CHANNEL_LAYERS = {
     'default': {
@@ -109,71 +116,37 @@ DEFAULT_FROM_EMAIL = 'move-fast+demo@profiq.com'
 SERVER_EMAIL = 'move-fast@profiq.com'
 
 # Logging
-LOGGING = {
+LOGGING_CONFIG = None
+LOGGING = None
+logging.config.dictConfig({
     'version': 1,
-    'disable_existing_loggers': True,
+    'disable_existing_loggers': False,
     'formatters': {
-        'django.server': {
-            '()': 'django.utils.log.ServerFormatter',
-            'format': '[%(server_time)s] %(message)s',
-        },
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s',
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s',
-        },
-    },
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
+        'console': {
+            # exact format is not important, this is the minimum information
+            'format': '%(levelname)-8s - %(name)-12s - %(message)s',
         },
     },
     'handlers': {
-        'django.middleware_log': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'filters': [],
-            'formatter': 'django.server',
-            'stream': sys.stdout,
-        },
-        'django.server': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'filters': [],
-            'formatter': 'django.server',
-            'stream': sys.stdout,
-        },
         'console': {
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-        },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'console',
         },
     },
     'loggers': {
-        'django': {
+        '': {
+            'level': 'WARNING',
             'handlers': ['console'],
-            'propagate': True,
         },
-        # 'django.server': {
-        #     'handlers': ['django.server'],
-        #     'level': 'INFO',
-        #     'propagate': False,
-        # },
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
+        'apps': {
+            'level': env.str('LOGLEVEL', 'INFO').upper(),
+            'handlers': ['console'],
             'propagate': False,
         },
-        'werkzeug': {
+        'daphne': {
+            'level': 'NOTSET',
             'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
+            'propagate': False,
         },
     },
-}
+})
