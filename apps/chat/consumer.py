@@ -32,15 +32,22 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
 
     async def receive_json(self, content, **kwargs):
         if 'message' in content:
+            msg = await self.create_message(message=content.get('message'))
             await self.channel_layer.group_send(
                 self.room_group_name, {
                     'type': 'chat_message',
-                    'content': dict(content, user=str(self.scope.get('user'))),
+                    'message': {
+                        'id': msg.id,
+                        'content': msg.content,
+                        'user': {
+                            'username': msg.user.username,
+                        },
+                        'createdAt': str(msg.created_at),
+                    },
                 })
-            await self.create_message(message=content.get('message'))
 
     async def chat_message(self, event):
-        await self.send_json(event['content'])
+        await self.send_json(event['message'])
 
     @database_sync_to_async
     def get_room(self, slug: str) -> Optional[Room]:

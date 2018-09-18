@@ -2,11 +2,9 @@ import logging
 from typing import Callable, Dict, List
 from urllib import parse
 
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, models
 from django.db import close_old_connections
 from django.http import HttpRequest, HttpResponse
-import jwt
-from jwt.exceptions import DecodeError
 
 from .backends import decode
 from .models import User
@@ -37,16 +35,19 @@ class WebSocketJwtAuthMiddleware:
     def __call__(self, scope: dict):
         query_string: str = bytes(scope['query_string']).decode('utf-8')
         parsed: Dict[str, List[str]] = parse.parse_qs(query_string)
+        user = None
 
         if 'Bearer' in parsed and len(parsed['Bearer']) == 1:
             token: str = parsed['Bearer'][0]
             payload: dict = decode(token)
 
             if payload is not None:
-                user = User.objects.get(pk=payload.get('id'))
-                close_old_connections()
+                try:
+                    user = User.objects.get(pk=payload.get('id'))
+                except User.DoesNotExist:
+                    pass
+                finally:
+                    close_old_connections()
 
-                if user is not None:
-                    scope = dict(scope, user=user)
-
-        return self.inner(scope)
+        user = user or models.AnonymousUser()
+        return self.inner(dict(scope, user=user))
