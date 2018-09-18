@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'django.contrib.admin',
     'channels',
+    'graphene_django',
     'corsheaders',
     'apps.authentication',
     'apps.chat',
@@ -52,6 +53,9 @@ CHANNEL_LAYERS = {
             'hosts': [(env.str('REDIS_HOST'), env.int('REDIS_PORT')),],
         },
     },
+}
+GRAPHENE = {
+    'SCHEMA': 'config.schema.schema',
 }
 
 # Static files
