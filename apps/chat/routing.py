@@ -2,7 +2,7 @@ import logging
 
 from django.urls import path
 
-from .consumer import ChatConsumer
+from .consumers import ChatConsumer
 
 logger = logging.getLogger(__name__)
 
