@@ -50,7 +50,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [(env.str('REDIS_HOST'), env.int('REDIS_PORT')),],
+            'hosts': [(env.str('REDIS_HOST', 'redis'), env.int('REDIS_PORT', 6379)),],
         },
     },
 }
@@ -90,10 +90,13 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
             ],
-            'loaders': [('django.template.loaders.cached.Loader', [
-                'django.template.loaders.filesystem.Loader',
-                'django.template.loaders.app_directories.Loader',
-            ]),],
+            'loaders': [(
+                'django.template.loaders.cached.Loader',
+                [
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                ],
+            ),],
         },
     },
 ]
@@ -114,10 +117,6 @@ USE_L10N = True
 USE_TZ = True
 
 CORS_ORIGIN_ALLOW_ALL = True
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = 'move-fast+demo@profiq.com'
-SERVER_EMAIL = 'move-fast@profiq.com'
 
 # Logging
 LOGGING_CONFIG = None

@@ -19,7 +19,3 @@ DATABASES = {
 # Static and media roots for development
 STATIC_ROOT = str(ROOT_DIR('staticfiles'))
 MEDIA_ROOT = str(ROOT_DIR('mediafiles'))
-
-# Mail
-EMAIL_PORT = 1025
-EMAIL_HOST = 'mailhog'

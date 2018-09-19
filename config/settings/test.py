@@ -16,7 +16,7 @@ SECRET_KEY = env.str('SECRET_KEY', default='!!!SET DJANGO_SECRET_KEY!!!')
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": ""
+        "LOCATION": "",
     }
 }
 
@@ -29,17 +29,11 @@ DATABASES = {
         'NAME': str(ROOT_DIR('db.sqlite3')),
     },
 }
+CHANNEL_LAYERS = {}
 
 # Static and media roots for tests
 STATIC_ROOT = str(ROOT_DIR('staticfiles'))
 MEDIA_ROOT = str(ROOT_DIR('mediafiles'))
-
-# Mail settings
-# ------------------------------------------------------------------------------
-EMAIL_PORT = 1025
-EMAIL_HOST = 'mailhog'
-# In-memory email backend stores messages in django.core.mail.outbox
-EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
 # TESTING
 # ------------------------------------------------------------------------------
