@@ -9,13 +9,11 @@ logger = logging.getLogger(__name__)
 
 
 class RoomType(DjangoObjectType):
-
     class Meta:
         model = Room
 
 
 class MessageType(DjangoObjectType):
-
     class Meta:
         model = Message
 
@@ -28,8 +26,8 @@ class Query:
         return Room.objects.all()
 
     def resolve_room(self, info, **kwargs):
-        room_id = kwargs.get('id')
-        slug = kwargs.get('slug')
+        room_id = kwargs.get("id")
+        slug = kwargs.get("slug")
 
         if room_id is not None:
             return Room.objects.get(pk=room_id)

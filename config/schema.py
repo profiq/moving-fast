@@ -1,11 +1,10 @@
 import graphene
 
-import apps.authentication.schema
-import apps.chat.schema
+from apps.authentication.schema import Query as AuthenticationQuery
+from apps.chat.schema import Query as ChatQuery
 
 
-class Query(apps.authentication.schema.Query, apps.chat.schema.Query,
-            graphene.ObjectType):
+class Query(AuthenticationQuery, ChatQuery, graphene.ObjectType):
     pass
 
 

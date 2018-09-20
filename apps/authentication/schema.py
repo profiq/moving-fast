@@ -5,10 +5,9 @@ from .models import User
 
 
 class UserType(DjangoObjectType):
-
     class Meta:
         model = User
-        only_fields = ('id', 'username', 'email', 'first_name', 'last_name')
+        only_fields = ("id", "username", "email", "first_name", "last_name")
 
 
 class Query:
@@ -19,8 +18,8 @@ class Query:
         return User.objects.all()
 
     def resolve_user(self, info, **kwargs):
-        user_id = kwargs.get('id')
-        username = kwargs.get('username')
+        user_id = kwargs.get("id")
+        username = kwargs.get("username")
 
         if user_id is not None:
             return User.objects.get(id=user_id)

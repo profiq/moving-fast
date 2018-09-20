@@ -1,7 +1,7 @@
 {
   "editor.tabSize": 4,
   "editor.autoIndent": false,
-  "python.pythonPath": "${workspaceFolder}/venv/bin/python",
+  "python.pythonPath": "/home/filip-vavera/.local/share/virtualenvs/backend-sN4V_aTx/bin/python",
   "python.unitTest.promptToConfigure": false,
   "python.unitTest.pyTestEnabled": false,
   "python.unitTest.unittestEnabled": false,

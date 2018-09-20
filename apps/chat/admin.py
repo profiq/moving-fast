@@ -6,7 +6,7 @@ from .models import Room, Message
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
     model = Room
-    prepopulated_fields = {'slug': ('name',)}
+    prepopulated_fields = {"slug": ("name",)}
 
 
 @admin.register(Message)

@@ -1,0 +1,36 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = {version = ">=2.0.0", extras = ["argon2"]}
+channels = ">=2.0.0"
+pillow = "*"
+django-environ = "*"
+django-cors-headers = "*"
+channels-redis = "*"
+pyjwt = "*"
+graphene = "*"
+graphene-django = "*"
+
+[dev-packages]
+pylint = "*"
+pylint-common = "*"
+pylint-django = "*"
+pytest = "*"
+pytest-sugar = "*"
+pytest-django = "*"
+pytest-asyncio = "*"
+coverage = "*"
+django-coverage-plugin = "*"
+"flake8" = "*"
+isort = "*"
+yapf = "*"
+black = "*"
+
+[requires]
+python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true

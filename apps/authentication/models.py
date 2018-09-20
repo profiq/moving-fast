@@ -9,13 +9,12 @@ logger = logging.getLogger(__name__)
 
 
 class User(AbstractUser):
-
     @property
     def token(self):
         return self._generate_jwt_token()
 
     def _generate_jwt_token(self):
         dt = datetime.now() + timedelta(days=60)
-        data = {'id': self.pk, 'exp': int(dt.strftime('%s'))}
-        token: bytes = jwt.encode(data, settings.SECRET_KEY, algorithm='HS256')
-        return token.decode('utf-8')
+        data = {"id": self.pk, "exp": int(dt.strftime("%s"))}
+        token: bytes = jwt.encode(data, settings.SECRET_KEY, algorithm="HS256")
+        return token.decode("utf-8")
