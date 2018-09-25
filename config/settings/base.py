@@ -1,8 +1,4 @@
-import sys
-import logging.config
-
 import environ
-from django.utils.log import DEFAULT_LOGGING
 
 ROOT_DIR = environ.Path(__file__) - 3
 APPS_DIR = ROOT_DIR.path("apps")
@@ -116,29 +112,20 @@ USE_TZ = True
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Logging
-LOGGING_CONFIG = None
-LOGGING = None
-logging.config.dictConfig(
-    {
-        "version": 1,
-        "disable_existing_loggers": False,
-        "formatters": {
-            "console": {
-                # exact format is not important, this is the minimum information
-                "format": "%(levelname)-8s - %(name)-12s - %(message)s"
-            }
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "console": {"format": "%(levelname)-8s - %(name)-12s - %(message)s"}
+    },
+    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "console"}},
+    "loggers": {
+        "django": {"level": "WARNING", "handlers": ["console"]},
+        "apps": {
+            "level": env.str("LOGLEVEL", "INFO").upper(),
+            "handlers": ["console"],
+            "propagate": False,
         },
-        "handlers": {
-            "console": {"class": "logging.StreamHandler", "formatter": "console"}
-        },
-        "loggers": {
-            "": {"level": "WARNING", "handlers": ["console"]},
-            "apps": {
-                "level": env.str("LOGLEVEL", "INFO").upper(),
-                "handlers": ["console"],
-                "propagate": False,
-            },
-            "daphne": {"level": "NOTSET", "handlers": ["console"], "propagate": False},
-        },
-    }
-)
+        "daphne": {"level": "NOTSET", "handlers": ["console"], "propagate": False},
+    },
+}

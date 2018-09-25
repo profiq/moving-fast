@@ -9,13 +9,13 @@ services:
       - .env
     depends_on:
       - postgres
-      - channel
+      - redis
     volumes:
       - .:/usr/src/app
     ports:
       - '8000:8000'
 
-  channel:
+  redis:
     image: redis:latest
     ports:
       - '6379:6379'
@@ -28,8 +28,3 @@ services:
       - ./pgdata:/var/lib/postgresql/data
     ports:
       - '5432:5432'
-
-  mailhog:
-    image: mailhog/mailhog:latest
-    ports:
-      - '8025:8025'
