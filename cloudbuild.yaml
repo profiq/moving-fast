@@ -17,9 +17,8 @@ steps:
       - 'CLOUDSDK_COMPUTE_ZONE=europe-west3-a'
       - 'CLOUDSDK_CONTAINER_CLUSTER=move-fast'
     args:
-      - '--namespace=demo'
       - 'set'
       - 'image'
       - 'deployment'
-      - 'production'
+      - 'django'
       - 'django=eu.gcr.io/${PROJECT_ID}/django:${REVISION_ID}'

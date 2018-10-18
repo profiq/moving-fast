@@ -16,9 +16,6 @@ DATABASES = {
     }
 }
 
-# Site hosting
-INSTALLED_APPS.append("gunicorn")
-
 # Security
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_HSTS_SECONDS = 31536000

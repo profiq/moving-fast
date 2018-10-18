@@ -2,3 +2,8 @@
 !.coveragerc
 !.env
 !.pylintrc
+tags
+/pgdata/
+
+__pycache__/
+example.env

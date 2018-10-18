@@ -1,0 +1,7 @@
+apiVersion: v1
+king: ConfigMap
+metadata:
+  name: django-production
+data:
+  debug: 'false'
+  log_level: INFO
