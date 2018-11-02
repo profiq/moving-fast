@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: django
@@ -25,58 +25,60 @@ spec:
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  name: django-production
+                  name: django-demo
                   key: secret_key
             - name: DJANGO_SETTINGS_MODULE
-              value: config.settings.django
+              value: config.settings.docker
             - name: DEBUG
               valueFrom:
                 configMapKeyRef:
-                  name: django-production
+                  name: django-demo
                   key: debug
             - name: LOGLEVEL
               valueFrom:
                 configMapKeyRef:
-                  name: django-production
+                  name: django-demo
                   key: log_level
 
             # Redis config
             - name: REDIS_HOST
               valueFrom:
                 secretKeyRef:
-                  name: django-production
+                  name: django-demo
                   key: redis_host
             - name: REDIS_PORT
               valueFrom:
                 secretKeyRef:
-                  name: django-production
+                  name: django-demo
                   key: redis_port
 
             # Database config
             - name: POSTGRES_HOST
               value: 127.0.0.1
             - name: POSTGRES_PORT
-              value: 5432
+              value: '5432'
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: django-production
+                  name: django-demo
                   key: db_username
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: django-production
+                  name: django-demo
                   key: db_password
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
-                  name: django-production
+                  name: django-demo
                   key: db_database
 
         # DB proxy sidepod
         - name: cloudsql-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:1.11
-          command: ["/cloud_sql_proxy", "-instances=<CONN_NAME>=tcp:5432", "-credential_file=/secrets/cloudsql/credentials.json"]
+          command: ["/cloud_sql_proxy",
+                    "-instances=meetup-demo-219112:europe-west4:demo-db=tcp:5432",
+                    "-credential_file=/secrets/cloudsql/credentials.json"]
           securityContext:
             runAsUser: 2
             allowPrivilegeEscalation: false

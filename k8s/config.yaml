@@ -1,7 +1,7 @@
 apiVersion: v1
-king: ConfigMap
+kind: ConfigMap
 metadata:
-  name: django-production
+  name: django-demo
 data:
   debug: 'false'
   log_level: INFO

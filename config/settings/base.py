@@ -55,7 +55,7 @@ GRAPHENE = {"SCHEMA": "config.schema.schema"}
 # Static files
 STATIC_URL = "/static/"
 STATIC_ROOT = str(ROOT_DIR("staticfiles"))
-STATICFILES_DIRS = [str(ROOT_DIR("static")), str(ROOT_DIR("templates"))]
+STATICFILES_DIRS = []
 STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",

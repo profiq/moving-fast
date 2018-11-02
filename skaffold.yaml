@@ -1,0 +1,9 @@
+apiVersion: skaffold/v1alpha5
+kind: Config
+build:
+  artifacts:
+    - image: eu.gcr.io/meetup-demo-219112/django
+deploy:
+  kubectl:
+    manifests:
+      - ./k8s/django.yaml

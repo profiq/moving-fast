@@ -3,10 +3,6 @@ kind: Ingress
 metadata:
   name: ingress
 spec:
-  rules:
-    - http:
-        paths:
-          - path: /
-            backend:
-              serviceName: demo-chat
-              servicePort: 80
+  backend:
+    serviceName: demo-chat
+    servicePort: 80

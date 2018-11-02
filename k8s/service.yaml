@@ -3,9 +3,10 @@ kind: Service
 metadata:
   name: demo-chat
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: demo-chat
   ports:
-    port: 80
-    targetPort: 5000
+    - protocol: TCP
+      port: 80
+      targetPort: 5000

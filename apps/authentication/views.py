@@ -1,13 +1,7 @@
 import json
 import logging
 
-from django.http import (
-    HttpRequest,
-    HttpResponse,
-    JsonResponse,
-    HttpResponseNotAllowed,
-    HttpResponseBadRequest,
-)
+from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed, JsonResponse
 
 from .models import User
 
@@ -36,3 +30,7 @@ def get_token(request: HttpRequest) -> HttpResponse:
             )
     else:
         return HttpResponseNotAllowed(permitted_methods=["POST"])
+
+
+def health(request: HttpRequest) -> JsonResponse:
+    return JsonResponse({"status": "healthy"})
