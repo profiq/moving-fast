@@ -1,0 +1,19 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: meetup-profiq-com-tls
+  namespace: default
+spec:
+  secretName: meetup-profiq-com-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: meetup.profiq.com
+  dnsNames:
+    - meetup.profiq.com
+  acme:
+    config:
+      - http01:
+          ingress: ingress
+        domains:
+          - meetup.profiq.com
