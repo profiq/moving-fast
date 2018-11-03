@@ -28,3 +28,4 @@ ENV/
 /pgdata/
 
 tags
+credentials.json
