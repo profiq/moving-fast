@@ -1,7 +1,7 @@
 from django.db import IntegrityError
 from django.test import TestCase
 
-from ..models import Room
+from .models import Room
 
 
 class RoomTestCase(TestCase):
