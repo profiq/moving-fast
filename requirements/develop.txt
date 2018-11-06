@@ -1,4 +1,4 @@
 -r ./base.txt
 
-Twisted[dev]==18.7.0
-psycopg2==2.7.4 --no-binary psycopg2
+Twisted[dev]==18.9.0
+psycopg2-binary==2.7.5
