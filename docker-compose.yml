@@ -17,8 +17,6 @@ services:
 
   redis:
     image: redis:latest
-    ports:
-      - '6379:6379'
 
   postgres:
     image: postgres:latest
@@ -26,5 +24,3 @@ services:
       - .env
     volumes:
       - ./pgdata:/var/lib/postgresql/data
-    ports:
-      - '5432:5432'
