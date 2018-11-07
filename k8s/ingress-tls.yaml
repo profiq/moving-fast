@@ -3,10 +3,10 @@ kind: Ingress
 metadata:
   name: ingress
 spec:
-  backend:
-    serviceName: demo-chat
-    servicePort: 80
   tls:
     - secretName: meetup-profiq-com-tls
       hosts:
-        - meetup.profiq.com
+        - api.meetup.profiq.com
+  backend:
+    serviceName: demo-chat
+    servicePort: 80
