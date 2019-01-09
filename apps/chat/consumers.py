@@ -5,7 +5,7 @@ from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
-from .models import Room, Message
+from .models import Message, Room
 
 logger = logging.getLogger(__name__)
 
